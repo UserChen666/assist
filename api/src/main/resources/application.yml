@@ -1,0 +1,47 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /assist
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Z105401461ch
+    url: jdbc:mysql://localhost:3306/engineer_db?serverTimezone=UTC&characterEncoding=utf-8
+#    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.zaxxer.hikari.HikariDataSource
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: isActive
+      logic-not-delete-value: 1
+      logic-delete-value: 0
+      id-type: auto
+      table-underline: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+
+pagehelper:
+  params: count=countSql
+  reasonable: true
+  support-methods-arguments: true
+  helper-dialect: mysql
+  page-size-zero: true
+
+custom:
+  aws:
+    access-key: CHOBITACCESSKEY
+    secret-key: CHOBIT/THISIS006SECRET007Key/dotORG
+    bucket: zhyea
+    endpoint: www.zhyea.com:80
