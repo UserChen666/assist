@@ -16,25 +16,25 @@ import java.util.stream.Collectors;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Cookie[] cookies = request.getCookies();
+//         Cookie[] cookies = request.getCookies();
 
-        if(ArrayUtils.isEmpty(cookies)){
-            //unlogin
-            return false;
-        }
+//         if(ArrayUtils.isEmpty(cookies)){
+//             //unlogin
+//             return false;
+//         }
 
-        List<Cookie> sessionIds = Arrays.stream(cookies).filter(k -> "assistSessionId".equals(k.getName())).collect(Collectors.toList());
+//         List<Cookie> sessionIds = Arrays.stream(cookies).filter(k -> "assistSessionId".equals(k.getName())).collect(Collectors.toList());
 
-        if(CollectionUtils.isEmpty(sessionIds)) {
-            //unlogin
-            return false;
-        }
+//         if(CollectionUtils.isEmpty(sessionIds)) {
+//             //unlogin
+//             return false;
+//         }
 
-        Cookie cookie = sessionIds.get(0);
-        String sessionKey = cookie.getValue();
-        User usrInfo = new User();
-        usrInfo.setUserName(sessionKey);
-        RestUtil.setUserInfo(usrInfo);
+//         Cookie cookie = sessionIds.get(0);
+//         String sessionKey = cookie.getValue();
+//         User usrInfo = new User();
+//         usrInfo.setUserName(sessionKey);
+//         RestUtil.setUserInfo(usrInfo);
         return true;
     }
 }
