@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/account")
 public class UserController {
@@ -33,9 +36,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Resp<Boolean> login(@RequestBody @Validated User user) {
+    public Resp<Boolean> login(@RequestBody @Validated User user, HttpSession session) {
         boolean login = userService.login(user);
-
+        if (login) session.setAttribute("name", user.getUserName());
         return Resp.buildSuccess(login);
     }
 
