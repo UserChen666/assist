@@ -43,7 +43,9 @@ public class UserController {
     }
 
     @PostMapping("/loginOut")
-    public void loginOut(@RequestBody User user) {
+    public Resp<Boolean> loginOut(@RequestBody User user, HttpSession session) {
         RestUtil.removeUserInfo();
+        session.setAttribute("name", null);
+        return Resp.buildSuccess(true);
     }
 }
