@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/projectInfo")
+@CrossOrigin
 public class ProjectController {
     @Autowired
     IProjectService iProjectService;
