@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/projectInfo")
+@RequestMapping("/projectInfo")
 @CrossOrigin
 public class ProjectController {
     @Autowired
