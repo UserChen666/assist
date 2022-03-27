@@ -36,4 +36,13 @@ public class Resp<T> {
 
         return resp;
     }
+
+    public static <T> Resp<T> buildFail(String msg,int code){
+        Resp<T> resp = new Resp<T>();
+
+        resp.setCode(code);
+        resp.setMsg(msg);
+
+        return resp;
+    }
 }

@@ -1,5 +1,7 @@
 package com.engineer.assist.config;
 
+import com.engineer.assist.exception.ServerException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //取出session里面的name属性,如果name为空, 就重定向到index界面
         String name = (String) request.getSession().getAttribute("name");
         if (Objects.isNull(name)) {
-            return false;
+            throw new ServerException("未登录", HttpStatus.FORBIDDEN.value());
         }
         //name属性存在, 即会话没有过期, 那么允许本次请求
         return true;
