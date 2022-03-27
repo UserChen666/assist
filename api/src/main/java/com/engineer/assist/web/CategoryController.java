@@ -17,26 +17,31 @@ public class CategoryController {
     ICategoryService iCategoryService;
 
     @GetMapping("/getById")
+    @ResponseBody
     public Resp<Category> getCategoryById(@RequestParam Integer id) {
         return Resp.buildSuccess(iCategoryService.getById(id));
     }
 
     @GetMapping("/deleteById")
+    @ResponseBody
     public Resp<Boolean> deleteById(@RequestParam Integer id) {
         return Resp.buildSuccess(iCategoryService.removeById(id));
     }
 
     @PostMapping("/create")
+    @ResponseBody
     public Resp<Boolean> create(@RequestBody CategoryDTO category) {
         Boolean save = iCategoryService.create(category);
         return Resp.buildSuccess(save);
     }
     @PostMapping("/list")
+    @ResponseBody
     public Resp<List<Category>> list(@RequestBody Category category){
         List<Category> list = iCategoryService.list(category);
         return Resp.buildSuccess(list);
     }
     @PostMapping("/update")
+    @ResponseBody
     Resp<Boolean> updateCategory(@RequestBody Category category){
         boolean b = iCategoryService.updateById(category);
         return Resp.buildSuccess(b);

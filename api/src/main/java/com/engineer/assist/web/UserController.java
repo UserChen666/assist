@@ -21,6 +21,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/reg")
+    @ResponseBody
     public Resp<Boolean> reg(@RequestBody @Validated User user) {
         User newUser = new User();
 
@@ -35,6 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @ResponseBody
     public Resp<Boolean> login(@RequestBody @Validated User user, HttpSession session) {
         boolean login = userService.login(user);
         if (login) session.setAttribute("name", user.getUserName());
@@ -42,6 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
+    @ResponseBody
     public Resp<Boolean> loginOut(@RequestBody User user, HttpSession session) {
         RestUtil.removeUserInfo();
         session.setAttribute("name", null);

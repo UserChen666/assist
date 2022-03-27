@@ -13,7 +13,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 // 设置允许跨域请求的域名
                 .allowedOrigins("*")
                 // 是否允许证书 不再默认开启
-                .allowCredentials(true)
+                .allowCredentials(false)
                 // 设置允许的方法
                 .allowedMethods("*")
                 // 跨域允许时间
