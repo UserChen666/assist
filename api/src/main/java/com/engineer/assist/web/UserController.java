@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/account")
 @CrossOrigin
 public class UserController {
 
