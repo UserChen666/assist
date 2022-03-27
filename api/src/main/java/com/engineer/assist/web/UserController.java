@@ -23,12 +23,13 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/reg")
-    public void reg(@RequestBody @Validated User user) {
+    public Resp<Boolean> reg(@RequestBody @Validated User user) {
         User newUser = new User();
 
         newUser.setUserPwd(SecureUtil.md5(user.getUserPwd()));
         newUser.setUserName(user.getUserName());
         userService.save(user);
+        return Resp.buildSuccess();
     }
 
     public static void main(String[] args) {

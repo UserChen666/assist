@@ -9,6 +9,8 @@ import java.util.Objects;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String contextPath = request.getRequestURI();
+        if (contextPath.contains("swagger")) return true;
         //取出session里面的name属性,如果name为空, 就重定向到index界面
         String name = (String) request.getSession().getAttribute("name");
         if (Objects.isNull(name)) {
