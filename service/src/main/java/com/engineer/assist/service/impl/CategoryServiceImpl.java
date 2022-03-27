@@ -28,7 +28,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public List<Category> list(Category category) {
-        List<Category> list = lambdaQuery().like(Category::getCategoryName, category).eq(Category::getIsActive, category.getIsActive()).eq(Category::getParentId, category.getParentId()).list();
+        List<Category> list = lambdaQuery()
+                .like(Category::getCategoryName, category.getCategoryName())
+                .eq(Category::getIsActive, true).list();
         return list;
     }
 
