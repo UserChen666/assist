@@ -9,7 +9,7 @@ import java.util.Objects;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String swaggerToken = request.getHeader("swaggerToken");
+        String swaggerToken = request.getHeader("token");
         if ("assist".equals(swaggerToken)){
             return true;
         }
