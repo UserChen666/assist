@@ -29,6 +29,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   global-config:
@@ -56,3 +59,4 @@ custom:
     secret-key: CHOBIT/THISIS006SECRET007Key/dotORG
     bucket: zhyea
     endpoint: www.zhyea.com:80
+
