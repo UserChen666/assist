@@ -3,6 +3,7 @@ package com.engineer.assist.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.entity.Category;
 import com.engineer.assist.entity.CategoryDTO;
+import com.engineer.assist.entity.CurrentUserUtil;
 import com.engineer.assist.entity.ProjectCategoryRel;
 import com.engineer.assist.mapper.CategoryMapper;
 import com.engineer.assist.service.ICategoryService;
@@ -37,6 +38,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public Boolean create(CategoryDTO categoryDTO) {
         Category category = categoryDTO.getCategory();
+
+        category.setCreatedBy(CurrentUserUtil.getUser().getUserName());
+
         boolean save = save(category);
         List<Integer> projectIds = categoryDTO.getProjectIds();
         if (projectIds.isEmpty()) return save;

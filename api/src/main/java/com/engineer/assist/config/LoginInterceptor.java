@@ -1,6 +1,8 @@
 package com.engineer.assist.config;
 
+import com.engineer.assist.entity.User;
 import com.engineer.assist.exception.ServerException;
+import com.engineer.assist.entity.CurrentUserUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,6 +15,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String swaggerToken = request.getHeader("token");
         if ("assist".equals(swaggerToken)){
+            User user = new User();
+            user.setUserName("assist");
+            CurrentUserUtil.setUser(user);
             return true;
         }
         //取出session里面的name属性,如果name为空, 就重定向到index界面

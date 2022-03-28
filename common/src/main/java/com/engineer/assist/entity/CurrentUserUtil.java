@@ -1,16 +1,15 @@
-package com.engineer.assist.util;
+package com.engineer.assist.entity;
 
-import com.engineer.assist.entity.User;
 
 public class CurrentUserUtil {
 
     private static ThreadLocal<User> loginUser =  new ThreadLocal<>();
 
-    public User getUser(){
+    public static User getUser(){
         return loginUser.get();
     }
 
-    public void setUser(User user){
+    public static void setUser(User user){
         loginUser.set(user);
     }
 }
