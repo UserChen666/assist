@@ -1,5 +1,7 @@
 package com.engineer.assist.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gitee.sunchenbin.mybatis.actable.annotation.Column;
@@ -39,9 +41,11 @@ public class Category implements Serializable {
     private String categoryName;
 
     @Column(name = "create_date")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDate;
 
     @Column(name = "update_date")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateDate;
 
     @Column(name = "created_by")
