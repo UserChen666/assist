@@ -8,7 +8,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-@RestControllerAdvice(basePackages = "com.engineer.assist.web")
 public class RespAdvice implements ResponseBodyAdvice {
 
     @Override

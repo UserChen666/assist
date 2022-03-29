@@ -9,7 +9,6 @@ public class ProjectDTO {
     ProjectInfo projectInfo;
     ProjectData projectData;
     List<Integer> categoryIds;
-    List<Category> categories;
     public ProjectInfo getProject(){
         return projectInfo;
     }

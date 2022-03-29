@@ -44,8 +44,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public Boolean create(CategoryDTO categoryDTO) {
         Category category = categoryDTO.getCategory();
 
-        category.setCreatedBy(CurrentUserUtil.getUser().getUserName());
-
         boolean save = save(category);
         List<Integer> projectIds = categoryDTO.getProjectIds();
         if (projectIds.isEmpty()) return save;

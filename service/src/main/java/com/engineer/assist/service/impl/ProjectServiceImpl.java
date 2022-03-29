@@ -56,7 +56,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             projectCategoryRel.setProjectId(projectDTO.getProject().getId());
             projectCategoryRel.setCategoryId(i);
             iProjectCategoryRelService.save(projectCategoryRel);
-
         });
         return save && save1;
 
