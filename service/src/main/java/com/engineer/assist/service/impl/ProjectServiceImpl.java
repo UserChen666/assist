@@ -1,5 +1,9 @@
 package com.engineer.assist.service.impl;
 
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.PutObjectRequest;
+import com.aliyun.oss.model.PutObjectResult;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.entity.*;
 import com.engineer.assist.mapper.ProjectFileRelMapper;
@@ -9,6 +13,7 @@ import com.engineer.assist.service.IProjectDataService;
 import com.engineer.assist.service.IProjectService;
 import com.engineer.assist.service.ProjectFileRelService;
 import com.github.pagehelper.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -23,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +48,15 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     IProjectCategoryRelService iProjectCategoryRelService;
     @Autowired
     ProjectFileRelService projectFileRelService;
+
+    String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
+    // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
+    String accessKeyId = "LTAI5t7vm7Uujx3aoK9nbQYh\n";
+    String accessKeySecret = "Yjdfn9JmR3dtI1rkpaoca1Ccddtrjm";
+    // 填写Bucket名称，例如examplebucket。
+    String bucketName = "file";
+    OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+
 
     public Boolean create(ProjectDTO projectDTO) {
         boolean save = save(projectDTO.getProject());
@@ -108,12 +123,29 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Override
     public Boolean upload(MultipartFile file, Integer projectId) {
         String url = "";
-        ProjectFileRel fileRel = new ProjectFileRel();
-        fileRel.setFileName(file.getName());
-        fileRel.setProjectId(projectId);
-        fileRel.setUrl(url);
-        projectFileRelService.save(fileRel);
-        return true;
+        if (!ossClient.doesBucketExist(bucketName))
+            ossClient.createBucket(bucketName);
+        try {
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, file.getName(), file.getInputStream());
+            PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
+            Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
+            url = ossClient.generatePresignedUrl("bucketName", "filename", expiration).toString();
+
+            ProjectFileRel fileRel = new ProjectFileRel();
+            fileRel.setFileName(file.getName());
+            fileRel.setProjectId(projectId);
+            fileRel.setUrl(url);
+            projectFileRelService.save(fileRel);
+            return true;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (StringUtils.isEmpty(url)) return false;
+            return true;
+        }
+
     }
 
     @Override
