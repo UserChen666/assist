@@ -41,8 +41,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Autowired
     IProjectCategoryRelService iProjectCategoryRelService;
     @Autowired
-    ProjectFileRelMapper projectFileRelMapper;
-    @Autowired
     ProjectFileRelService projectFileRelService;
 
     public Boolean create(ProjectDTO projectDTO) {
@@ -109,12 +107,17 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
     @Override
     public Boolean upload(MultipartFile file, Integer projectId) {
-
+        String url = "";
+        ProjectFileRel fileRel = new ProjectFileRel();
+        fileRel.setFileName(file.getName());
+        fileRel.setProjectId(projectId);
+        fileRel.setUrl(url);
+        projectFileRelService.save(fileRel);
         return true;
     }
 
     @Override
-    public void download(String url ) {
+    public void download(String url) {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (servletRequestAttributes == null) {
             return;
@@ -122,7 +125,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         HttpServletResponse response = servletRequestAttributes.getResponse();
         int bytesum = 0;
         int byteread = 0;
-        URL u=null;
+        URL u = null;
         try {
             u = new URL(url);
         } catch (MalformedURLException e) {
