@@ -13,6 +13,7 @@ public class MybatisAutoFill implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         if(CurrentUserUtil.getUser() != null){
             setFieldValByName("createdBy", CurrentUserUtil.getName(),metaObject);
+            setFieldValByName("updatedBy", CurrentUserUtil.getName(),metaObject);
             setFieldValByName("createDate", LocalDateTime.now(),metaObject);
             setFieldValByName("updateDate", LocalDateTime.now(),metaObject);
         }
