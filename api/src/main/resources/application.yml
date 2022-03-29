@@ -34,7 +34,6 @@ mybatis-plus:
       id-type: auto
       table-underline: true
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     cache-enabled: false
     map-underscore-to-camel-case: true
 
