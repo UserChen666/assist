@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    #password: Z105401461ch
+    password: 12345678
+    url: jdbc:mysql://localhost:3306/engineer_db?serverTimezone=UTC&characterEncoding=utf-8
+    type: com.zaxxer.hikari.HikariDataSource

@@ -21,10 +21,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         //取出session里面的name属性,如果name为空, 就重定向到index界面
-        String name = (String) request.getSession().getAttribute("name");
+        User name = (User) request.getSession().getAttribute("currentUser");
         if (Objects.isNull(name)) {
             throw new ServerException("未登录", HttpStatus.FORBIDDEN.value());
         }
+
+        CurrentUserUtil.setUser(name);
+
         //name属性存在, 即会话没有过期, 那么允许本次请求
         return true;
     }

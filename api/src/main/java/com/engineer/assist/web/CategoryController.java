@@ -22,6 +22,12 @@ public class CategoryController {
         return Resp.buildSuccess(iCategoryService.getById(id));
     }
 
+    @GetMapping("/getByParentId")
+    @ResponseBody
+    public Resp<List<Category>> getByParentId(@RequestParam Integer id) {
+        return Resp.buildSuccess(iCategoryService.getByParentId(id));
+    }
+
     @GetMapping("/deleteById")
     @ResponseBody
     public Resp<Boolean> deleteById(@RequestParam Integer id) {

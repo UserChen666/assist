@@ -3,6 +3,8 @@ package com.engineer.assist.service;
 import com.engineer.assist.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * <p>
  *  服务类
@@ -13,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserService extends IService<User> {
 
-    boolean login(User user);
+    boolean login(User user, HttpSession session);
 }

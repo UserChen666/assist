@@ -38,8 +38,7 @@ public class UserController {
     @PostMapping("/login")
     @ResponseBody
     public Resp<Boolean> login(@RequestBody @Validated User user, HttpSession session) {
-        boolean login = userService.login(user);
-        if (login) session.setAttribute("name", user.getUserName());
+        boolean login = userService.login(user,session);
         return Resp.buildSuccess(login);
     }
 

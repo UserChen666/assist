@@ -18,4 +18,6 @@ public interface ICategoryService extends IService<Category> {
 
     public List<Category> list(Category category);
     Boolean create(CategoryDTO category);
+
+    List<Category> getByParentId(Integer id);
 }

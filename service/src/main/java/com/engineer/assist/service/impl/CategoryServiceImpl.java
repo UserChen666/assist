@@ -36,6 +36,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
+    public List<Category> getByParentId(Integer id) {
+        return lambdaQuery().eq(Category::getParentId,id).list();
+    }
+
+    @Override
     public Boolean create(CategoryDTO categoryDTO) {
         Category category = categoryDTO.getCategory();
 
