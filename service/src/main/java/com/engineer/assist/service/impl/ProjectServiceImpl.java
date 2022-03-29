@@ -155,4 +155,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         List<ProjectFileRel> list = projectFileRelService.lambdaQuery().eq(ProjectFileRel::getProjectId, projectId).list();
         return list;
     }
+
+    @Override
+    public boolean updateCategory(ProjectCategoryRel projectCategoryRel) {
+        ProjectCategoryRel one = iProjectCategoryRelService.lambdaQuery().eq(ProjectCategoryRel::getProjectId, projectCategoryRel.getProjectId()).one();
+        iProjectCategoryRelService.removeById(one.getId());
+        iProjectCategoryRelService.save(projectCategoryRel);
+        return true;
+    }
 }

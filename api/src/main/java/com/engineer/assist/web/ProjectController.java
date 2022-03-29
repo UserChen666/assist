@@ -1,9 +1,6 @@
 package com.engineer.assist.web;
 
-import com.engineer.assist.entity.ProjectDTO;
-import com.engineer.assist.entity.ProjectData;
-import com.engineer.assist.entity.ProjectFileRel;
-import com.engineer.assist.entity.ProjectInfo;
+import com.engineer.assist.entity.*;
 import com.engineer.assist.resp.Resp;
 import com.engineer.assist.service.IProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +48,11 @@ public class ProjectController {
     @PostMapping("/updateProject")
     Resp<Boolean> updateProject(@RequestBody ProjectInfo project) {
         boolean b = iProjectService.updateById(project);
+        return Resp.buildSuccess(b);
+    }
+    @PostMapping("/changeCategory")
+    Resp<Boolean> updateProject(@RequestBody ProjectCategoryRel projectCategoryRel) {
+        boolean b = iProjectService.updateCategory(projectCategoryRel);
         return Resp.buildSuccess(b);
     }
 
