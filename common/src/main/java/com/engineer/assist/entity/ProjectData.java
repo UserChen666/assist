@@ -1,6 +1,7 @@
 package com.engineer.assist.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.engineer.assist.enumDTO.DataType;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -35,7 +36,8 @@ public class ProjectData implements Serializable {
 
     private String dataName;
 
-    private String dateType;
+    private DataType dateType;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)

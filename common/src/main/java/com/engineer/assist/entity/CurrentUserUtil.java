@@ -9,6 +9,14 @@ public class CurrentUserUtil {
         return loginUser.get();
     }
 
+    public static String getName(){
+        User u = loginUser.get();
+        if(u != null) {
+            return u.getUserName();
+        }
+        return "unknow";
+    }
+
     public static void setUser(User user){
         loginUser.set(user);
     }

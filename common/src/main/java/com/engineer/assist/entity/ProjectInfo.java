@@ -3,6 +3,7 @@ package com.engineer.assist.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.engineer.assist.enumDTO.ProjectType;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class ProjectInfo implements Serializable {
 
     private String projectName;
 
-    private String projectType;
+    private ProjectType projectType;
 
     private String descripetion;
     @TableField(fill = FieldFill.INSERT)
