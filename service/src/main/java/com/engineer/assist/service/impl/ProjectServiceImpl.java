@@ -126,13 +126,14 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         if (!ossClient.doesBucketExist(bucketName))
             ossClient.createBucket(bucketName);
         try {
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, file.getName(), file.getInputStream());
+            String fineName = file.getName();
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fineName, file.getInputStream());
             PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
             Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
-            url = ossClient.generatePresignedUrl("bucketName", "filename", expiration).toString();
+            url = ossClient.generatePresignedUrl(bucketName, fineName, expiration).toString();
 
             ProjectFileRel fileRel = new ProjectFileRel();
-            fileRel.setFileName(file.getName());
+            fileRel.setFileName(fineName);
             fileRel.setProjectId(projectId);
             fileRel.setUrl(url);
             projectFileRelService.save(fileRel);
@@ -140,8 +141,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (StringUtils.isEmpty(url)) return false;
             return true;
         }
