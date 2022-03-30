@@ -132,14 +132,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
             Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
             url = ossClient.generatePresignedUrl(bucketName, fineName, expiration).toString();
-
             ProjectFileRel fileRel = new ProjectFileRel();
             fileRel.setFileName(fineName);
             fileRel.setProjectId(projectId);
             fileRel.setUrl(url);
             projectFileRelService.save(fileRel);
             return true;
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
