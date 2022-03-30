@@ -1,6 +1,7 @@
 package com.engineer.assist.service.impl;
 
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
@@ -15,12 +16,15 @@ import com.engineer.assist.service.ProjectFileRelService;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -48,14 +52,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     IProjectCategoryRelService iProjectCategoryRelService;
     @Autowired
     ProjectFileRelService projectFileRelService;
-
-    String endpoint = "https://oss-cn-hangzhou.aliyuncs.com";
-    // 阿里云账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM用户进行API访问或日常运维，请登录RAM控制台创建RAM用户。
-    String accessKeyId = "LTAI5t7vm7Uujx3aoK9nbQYh\n";
-    String accessKeySecret = "Yjdfn9JmR3dtI1rkpaoca1Ccddtrjm";
-    // 填写Bucket名称，例如examplebucket。
-    String bucketName = "file";
-    OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
+    @Autowired
+    @Qualifier("ossClient")
+    private OSS ossClient;
+    @Value("${aliyun.oss.bucketName}")
+    private String bucketName;
 
 
     public Boolean create(ProjectDTO projectDTO) {
