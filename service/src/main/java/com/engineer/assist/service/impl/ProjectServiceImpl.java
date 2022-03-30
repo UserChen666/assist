@@ -9,10 +9,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.entity.*;
 import com.engineer.assist.mapper.ProjectFileRelMapper;
 import com.engineer.assist.mapper.ProjectMapper;
-import com.engineer.assist.service.IProjectCategoryRelService;
-import com.engineer.assist.service.IProjectDataService;
-import com.engineer.assist.service.IProjectService;
-import com.engineer.assist.service.ProjectFileRelService;
+import com.engineer.assist.mapper.UploadRecordMapper;
+import com.engineer.assist.service.*;
 import com.github.pagehelper.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +55,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     private OSS ossClient;
     @Value("${aliyun.oss.bucketName}")
     private String bucketName;
+    @Autowired
+    IUploadRecordService uploadRecordService;
 
 
     public Boolean create(ProjectDTO projectDTO) {
@@ -137,6 +137,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             fileRel.setProjectId(projectId);
             fileRel.setUrl(url);
             projectFileRelService.save(fileRel);
+
+
+            UploadRecord uploadRecord = new UploadRecord();
+            uploadRecord.setProjectId(projectId).setUploader(CurrentUserUtil.getUser().getUserName());
+            uploadRecordService.save(uploadRecord);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -193,5 +198,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         iProjectCategoryRelService.removeById(one.getId());
         iProjectCategoryRelService.save(projectCategoryRel);
         return true;
+    }
+
+    @Override
+    public List<UploadRecord> getUploadRecord(Integer projectId) {
+        List<UploadRecord> list = uploadRecordService.lambdaQuery().eq(UploadRecord::getProjectId, projectId).list();
+        return list;
     }
 }

@@ -33,4 +33,6 @@ public interface IProjectService extends IService<ProjectInfo> {
     List<ProjectFileRel> listFiles(Integer projectId);
 
     boolean updateCategory(ProjectCategoryRel projectCategoryRel);
+
+    List<UploadRecord> getUploadRecord(Integer projectId);
 }

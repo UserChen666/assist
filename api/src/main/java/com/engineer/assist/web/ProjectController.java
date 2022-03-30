@@ -81,5 +81,10 @@ public class ProjectController {
     Resp<List<ProjectFileRel>> getFileList(@RequestParam Integer projectId){
         return Resp.buildSuccess(iProjectService.listFiles(projectId));
     }
+    @PostMapping("/getUploadRecord")
+    @ResponseBody
+    Resp<List<UploadRecord>> getUploadRecord(@RequestParam Integer projectId){
+        return Resp.buildSuccess(iProjectService.getUploadRecord(projectId));
+    }
 
 }
