@@ -55,4 +55,4 @@ aliyun:
     endpoint: https://oss-cn-hangzhou.aliyuncs.com
     accessKeyId: LTAI5t7vm7Uujx3aoK9nbQYh # 访问身份验证中用到用户标识
     accessKeySecret: Yjdfn9JmR3dtI1rkpaoca1Ccddtrjm # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: file # oss的存储空间
+    bucketName: upload # oss的存储空间
