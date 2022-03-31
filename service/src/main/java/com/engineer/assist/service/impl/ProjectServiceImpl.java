@@ -138,7 +138,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             fileRel.setUrl(url);
             projectFileRelService.save(fileRel);
 
-
             UploadRecord uploadRecord = new UploadRecord();
             uploadRecord.setProjectId(projectId).setUploader(CurrentUserUtil.getUser().getUserName());
             uploadRecordService.save(uploadRecord);
