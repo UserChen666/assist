@@ -25,7 +25,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public boolean login(User user, HttpSession session) {
         Boolean login = false;
         String userName = user.getUserName();
-        User entity = lambdaQuery().eq(User::getUserName, userName).eq(User::getUserPwd, user.getUserPwd()).getEntity();
+        User entity = lambdaQuery().eq(User::getUserName, userName).eq(User::getUserPwd, user.getUserPwd()).one();
         if (entity != null) {
             login = true;
             session.setAttribute("currentUser",entity);
