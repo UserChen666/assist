@@ -1,10 +1,15 @@
 package com.engineer.assist.config;
 
+import com.engineer.assist.service.impl.SessionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private SessionService sessionService;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -22,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor());
+        InterceptorRegistration registration = registry.addInterceptor(new LoginInterceptor(sessionService));
         registration.addPathPatterns("/**");                      //所有路径都被拦截
         registration.excludePathPatterns(                         //添加不拦截路径
                 "/account/login",            //登录

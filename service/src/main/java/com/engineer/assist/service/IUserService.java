@@ -15,5 +15,5 @@ import javax.servlet.http.HttpSession;
  */
 public interface IUserService extends IService<User> {
 
-    boolean login(User user, HttpSession session);
+    String login(User user);
 }

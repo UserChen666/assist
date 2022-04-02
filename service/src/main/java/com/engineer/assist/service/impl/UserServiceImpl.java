@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.entity.User;
 import com.engineer.assist.mapper.UserMapper;
 import com.engineer.assist.service.IUserService;
-import com.engineer.assist.util.RestUtil;
+import com.engineer.assist.util.AssistUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * <p>
@@ -20,16 +19,22 @@ import javax.servlet.http.HttpSession;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
+    @Autowired
+    private SessionService sessionService;
 
     @Override
-    public boolean login(User user, HttpSession session) {
-        Boolean login = false;
+    public String login(User user) {
         String userName = user.getUserName();
         User entity = lambdaQuery().eq(User::getUserName, userName).eq(User::getUserPwd, user.getUserPwd()).one();
         if (entity != null) {
-            login = true;
-            session.setAttribute("currentUser",entity);
+
+            String uuid = AssistUtil.getUuid(false);
+
+            sessionService.put(uuid,entity);
+
+            return uuid;
         }
-        return login;
+
+        return "";
     }
 }
