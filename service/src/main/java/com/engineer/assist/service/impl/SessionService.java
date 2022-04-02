@@ -6,6 +6,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Callable;
@@ -18,6 +19,7 @@ public class SessionService implements InitializingBean {
     private Cache<String, User> cache;
 
     @Autowired
+    @Lazy
     private IUserService userService;
 
     @Override

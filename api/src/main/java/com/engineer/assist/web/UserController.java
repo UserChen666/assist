@@ -2,6 +2,7 @@ package com.engineer.assist.web;
 
 import cn.hutool.crypto.SecureUtil;
 import com.engineer.assist.entity.User;
+import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.resp.Resp;
 import com.engineer.assist.service.IUserService;
 import com.engineer.assist.util.RestUtil;
@@ -37,7 +38,7 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public Resp<String> login(@RequestBody @Validated User user) {
+    public Resp<String> login(@RequestBody @Validated User user) throws ServerException {
         String login = userService.login(user);
         return Resp.buildSuccess(login);
     }
