@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping("/detail")
     @ResponseBody
-    public Resp<User> getAccount(HttpServletRequest request) throws ServerException {
+    public Resp<User> getAccount() throws ServerException {
         User u = userService.getAccount(CurrentUserUtil.currentToken());
         return Resp.buildSuccess(u);
     }
