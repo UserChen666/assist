@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -46,8 +47,8 @@ public class UserController {
 
     @GetMapping("/detail")
     @ResponseBody
-    public Resp<User> getAccount(@RequestParam String user) throws ServerException {
-        User u = userService.getAccount(user);
+    public Resp<User> getAccount(HttpServletRequest request) throws ServerException {
+        User u = userService.getAccount(CurrentUserUtil.currentToken());
         return Resp.buildSuccess(u);
     }
 

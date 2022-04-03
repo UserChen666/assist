@@ -1,6 +1,11 @@
 package com.engineer.assist.entity;
 
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+
 public class CurrentUserUtil {
 
     private static ThreadLocal<User> loginUser =  new ThreadLocal<>();
@@ -23,5 +28,15 @@ public class CurrentUserUtil {
 
     public static void removeUserInfo() {
         loginUser.remove();
+    }
+
+    public static String currentToken() {
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+
+        if(request == null) {
+            return "";
+        }
+
+        return request.getHeader("token");
     }
 }
