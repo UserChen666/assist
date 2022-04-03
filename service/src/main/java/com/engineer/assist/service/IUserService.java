@@ -17,4 +17,8 @@ import javax.servlet.http.HttpSession;
 public interface IUserService extends IService<User> {
 
     String login(User user) throws ServerException;
+
+    User getAccount(String user);
+
+    void loginOut(String token);
 }

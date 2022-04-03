@@ -1,6 +1,7 @@
 package com.engineer.assist.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.engineer.assist.entity.CurrentUserUtil;
 import com.engineer.assist.entity.User;
 import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.mapper.UserMapper;
@@ -38,5 +39,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         sessionService.put(uuid,entity);
 
         return uuid;
+    }
+
+    @Override
+    public User getAccount(String user) {
+        try {
+            return sessionService.get(user);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void loginOut(String token) {
+        CurrentUserUtil.removeUserInfo();
+        sessionService.remove(token);
     }
 }

@@ -20,4 +20,8 @@ public class CurrentUserUtil {
     public static void setUser(User user){
         loginUser.set(user);
     }
+
+    public static void removeUserInfo() {
+        loginUser.remove();
+    }
 }

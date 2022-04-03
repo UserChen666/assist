@@ -4,11 +4,14 @@ import com.engineer.assist.entity.User;
 import com.engineer.assist.service.IUserService;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalNotification;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -36,5 +39,9 @@ public class SessionService implements InitializingBean {
 
     public void put(String key,User value){
         cache.put(key,value);
+    }
+
+    public void remove(String token) {
+        cache.invalidate(token);
     }
 }

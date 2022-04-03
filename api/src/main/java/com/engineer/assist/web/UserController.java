@@ -1,6 +1,7 @@
 package com.engineer.assist.web;
 
 import cn.hutool.crypto.SecureUtil;
+import com.engineer.assist.entity.CurrentUserUtil;
 import com.engineer.assist.entity.User;
 import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.resp.Resp;
@@ -43,11 +44,17 @@ public class UserController {
         return Resp.buildSuccess(login);
     }
 
+    @GetMapping("/account")
+    @ResponseBody
+    public Resp<User> getAccount(@RequestParam String user) throws ServerException {
+        User u = userService.getAccount(user);
+        return Resp.buildSuccess(u);
+    }
+
     @PostMapping("/logout")
     @ResponseBody
-    public Resp<Boolean> loginOut(@RequestBody User user, HttpSession session) {
-        RestUtil.removeUserInfo();
-        session.setAttribute("name", null);
+    public Resp<Boolean> loginOut(@RequestBody String token) {
+        userService.loginOut(token);
         return Resp.buildSuccess(true);
     }
 }
