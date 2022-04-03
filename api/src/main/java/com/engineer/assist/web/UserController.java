@@ -44,7 +44,7 @@ public class UserController {
         return Resp.buildSuccess(login);
     }
 
-    @GetMapping("/account")
+    @GetMapping("/detail")
     @ResponseBody
     public Resp<User> getAccount(@RequestParam String user) throws ServerException {
         User u = userService.getAccount(user);
