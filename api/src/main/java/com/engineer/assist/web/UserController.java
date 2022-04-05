@@ -54,8 +54,8 @@ public class UserController {
 
     @PostMapping("/logout")
     @ResponseBody
-    public Resp<Boolean> loginOut(@RequestBody String token) {
-        userService.loginOut(token);
+    public Resp<Boolean> loginOut() {
+        userService.loginOut(CurrentUserUtil.currentToken());
         return Resp.buildSuccess(true);
     }
 }
