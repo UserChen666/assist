@@ -26,6 +26,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         //取出session里面的name属性,如果name为空, 就重定向到index界面
 
+        if (Objects.isNull(swaggerToken)) {
+            throw new ServerException("please login", HttpStatus.FORBIDDEN.value());
+        }
+
         User user = sessionService.get(swaggerToken);
 
         if (Objects.isNull(user)) {
