@@ -41,19 +41,18 @@ import java.util.List;
 public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> implements IProjectService {
 
     @Autowired
-    IProjectDataService iProjectDataService;
+    private IProjectDataService iProjectDataService;
     @Autowired
-    IProjectCategoryRelService iProjectCategoryRelService;
+    private IProjectCategoryRelService iProjectCategoryRelService;
     @Autowired
-    ProjectFileRelService projectFileRelService;
+    private ProjectFileRelService projectFileRelService;
     @Autowired
     @Qualifier("ossClient")
     private OSS ossClient;
     @Value("${aliyun.oss.bucketName}")
     private String bucketName;
     @Autowired
-    IUploadRecordService uploadRecordService;
-
+    private IUploadRecordService uploadRecordService;
 
     public Boolean create(ProjectDTO projectDTO) {
         boolean save = save(projectDTO.getProject());

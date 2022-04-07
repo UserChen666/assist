@@ -8,14 +8,14 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
         <result column="data_name" jdbcType="VARCHAR" property="dataName" />
-        <result column="date_type" jdbcType="VARCHAR" property="dataType" />
+        <result column="data_type" jdbcType="VARCHAR" property="dataType" />
         <result column="project_id" jdbcType="INTEGER" property="projectId" />
         <result column="source" jdbcType="VARCHAR" property="source" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, create_time, created_by, data_name, date_type, project_id, `source`, update_time
+        id, create_time, created_by, data_name, data_type, project_id, `source`, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -32,7 +32,7 @@
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.engineer.assist.entity.ProjectData" useGeneratedKeys="true">
         <!--@mbg.generated-->
         insert into project_data (create_time, created_by, data_name,
-        date_type, project_id, `source`,
+        data_type, project_id, `source`,
         update_time)
         values (#{createTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{dataName,jdbcType=VARCHAR},
         #{dataType,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR},
@@ -52,7 +52,7 @@
                 data_name,
             </if>
             <if test="dataType != null">
-                date_type,
+                data_type,
             </if>
             <if test="projectId != null">
                 project_id,
@@ -102,7 +102,7 @@
                 data_name = #{dataName,jdbcType=VARCHAR},
             </if>
             <if test="dataType != null">
-                date_type = #{dataType,jdbcType=VARCHAR},
+                data_type = #{dataType,jdbcType=VARCHAR},
             </if>
             <if test="projectId != null">
                 project_id = #{projectId,jdbcType=INTEGER},
@@ -122,7 +122,7 @@
         set create_time = #{createTime,jdbcType=TIMESTAMP},
         created_by = #{createdBy,jdbcType=VARCHAR},
         data_name = #{dataName,jdbcType=VARCHAR},
-        date_type = #{dataType,jdbcType=VARCHAR},
+        data_type = #{dataType,jdbcType=VARCHAR},
         project_id = #{projectId,jdbcType=INTEGER},
         `source` = #{source,jdbcType=VARCHAR},
         update_time = #{updateTime,jdbcType=TIMESTAMP}
@@ -134,26 +134,20 @@
         <include refid="Base_Column_List" />
         from project_data
         <where>
-            <if test="createTime != null">
-                and create_time = #{createTime,jdbcType=TIMESTAMP},
-            </if>
             <if test="createdBy != null">
-                and created_by = #{createdBy,jdbcType=VARCHAR},
+                and created_by like concat('%',#{createdBy,jdbcType=VARCHAR},'%')
             </if>
             <if test="dataName != null">
-                and data_name = #{dataName,jdbcType=VARCHAR},
+                and data_name like concat('%',#{dataName,jdbcType=VARCHAR},'%')
             </if>
             <if test="dataType != null">
-                and date_type = #{dataType,jdbcType=VARCHAR},
+                and data_type = #{dataType,jdbcType=VARCHAR}
             </if>
             <if test="projectId != null">
-                and project_id = #{projectId,jdbcType=INTEGER},
+                and project_id = #{projectId,jdbcType=INTEGER}
             </if>
             <if test="source != null">
-                and `source` = #{source,jdbcType=VARCHAR},
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime,jdbcType=TIMESTAMP},
+                and `source` = #{source,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
