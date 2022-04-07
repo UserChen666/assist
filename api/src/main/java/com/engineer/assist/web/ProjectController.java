@@ -2,10 +2,12 @@ package com.engineer.assist.web;
 
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.resp.Resp;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.IProjectService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,7 +45,10 @@ public class ProjectController {
 
     @PostMapping("/list")
     @ResponseBody
-    Resp<List<ProjectData>> list(@RequestBody ProjectReq projectDTO) {
+    Resp<List<ProjectData>> list(@RequestBody ProjectReq projectDTO) throws ServerException {
+        if(projectDTO.getPageNum() == 0 || projectDTO.getPageNum() == 0) {
+            throw new ServerException("page param is zero");
+        }
         List<ProjectData> search = iProjectService.search(projectDTO);
         return Resp.buildSuccess(search);
     }

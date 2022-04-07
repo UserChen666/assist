@@ -1,6 +1,6 @@
 package com.engineer.assist.result;
 
-import generator.domain.ProjectData;
+import com.engineer.assist.entity.ProjectData;
 import lombok.Data;
 
 @Data
