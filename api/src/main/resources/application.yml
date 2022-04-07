@@ -7,12 +7,12 @@ server:
 spring:
   profiles:
     active: online
-  session:
-    store-type: jdbc
-    jdbc:
-      initialize-schema: always
-      schema: classpath:schema-mysql.sql
-      table-name: SPRING_SESSION
+#  session:
+#    store-type: jdbc
+#    jdbc:
+#      initialize-schema: always
+#      schema: classpath:schema-mysql.sql
+#      table-name: SPRING_SESSION
   jpa:
     hibernate:
       ddl-auto: update

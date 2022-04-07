@@ -33,7 +33,7 @@ public class ProjectInfo implements Serializable {
     private LocalDateTime updateTime;
 
     private String createdBy;
-
+    @TableField(fill = FieldFill.INSERT)
     private Boolean isActive;
 
 }

@@ -11,9 +11,11 @@ public enum ProjectType{
     CAD(0,"CAD"),
     PDF(1,"PDF"),
     WORD(2,"WORD");
+
+    private int code;
+
     @EnumValue
     @JsonValue
-    private int code;
     private String name;
 
     ProjectType(int code, String name) {
