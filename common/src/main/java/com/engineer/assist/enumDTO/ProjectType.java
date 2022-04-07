@@ -1,5 +1,6 @@
 package com.engineer.assist.enumDTO;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IEnum;
 
 import java.io.Serializable;

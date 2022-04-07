@@ -36,7 +36,7 @@ public class ProjectData implements Serializable {
 
     private String dataName;
 
-    private DataType dateType;
+    private DataType dataType;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
@@ -44,17 +44,4 @@ public class ProjectData implements Serializable {
     private LocalDateTime updateTime;
 
     private String createdBy;
-
-    @Override
-    public String toString() {
-        return "ProjectData{" +
-            "id=" + id +
-            ", source=" + source +
-            ", dataName=" + dataName +
-            ", dateType=" + dateType +
-            ", createTime=" + createTime +
-            ", updateTime=" + updateTime +
-            ", createdBy=" + createdBy +
-        "}";
-    }
 }

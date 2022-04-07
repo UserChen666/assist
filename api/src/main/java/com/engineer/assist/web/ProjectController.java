@@ -1,7 +1,10 @@
 package com.engineer.assist.web;
 
+import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.resp.Resp;
+import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.IProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,9 +43,9 @@ public class ProjectController {
 
     @PostMapping("/list")
     @ResponseBody
-    Resp<List<ProjectDTO>> list(@RequestBody ProjectDTO projectDTO) {
-        List<ProjectDTO> res = iProjectService.search(projectDTO);
-        return Resp.buildSuccess(res);
+    Resp<List<ProjectData>> list(@RequestBody ProjectReq projectDTO) {
+        List<ProjectData> search = iProjectService.search(projectDTO);
+        return Resp.buildSuccess(search);
     }
 
     @PostMapping("/updateProject")

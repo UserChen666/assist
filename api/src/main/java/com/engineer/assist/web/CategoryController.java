@@ -1,13 +1,12 @@
 package com.engineer.assist.web;
 
 import com.engineer.assist.entity.Category;
-import com.engineer.assist.entity.CategoryDTO;
+import com.engineer.assist.dto.CategoryDTO;
 import com.engineer.assist.resp.Resp;
 import com.engineer.assist.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController

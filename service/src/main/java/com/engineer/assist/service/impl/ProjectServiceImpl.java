@@ -1,35 +1,31 @@
 package com.engineer.assist.service.impl;
 
 import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
-import com.engineer.assist.mapper.ProjectFileRelMapper;
 import com.engineer.assist.mapper.ProjectMapper;
-import com.engineer.assist.mapper.UploadRecordMapper;
+import com.engineer.assist.req.ProjectReq;
+import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
-import com.github.pagehelper.util.StringUtil;
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,24 +91,11 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     }
 
     @Override
-    public List<ProjectDTO> search(ProjectDTO projectDTO) {
-        List<ProjectDTO> res = new ArrayList<>();
-        ProjectInfo project = projectDTO.getProject();
-        if (CollectionUtils.isEmpty(projectDTO.getCategoryIds())) {
-            List<ProjectInfo> list = lambdaQuery().like(ProjectInfo::getProjectName, project.getProjectName())
-                    .eq(ProjectInfo::getProjectType, project.getProjectType())
-                    .eq(ProjectInfo::getIsActive, project.getIsActive()).list();
-            list.forEach(
-                    item -> {
-                        ProjectDTO temp = new ProjectDTO();
-                        temp.setProjectInfo(project);
-                        ProjectData entity = iProjectDataService.lambdaQuery().eq(ProjectData::getProjectId, item.getId()).getEntity();
-                        temp.setProjectData(entity);
-                        res.add(temp);
-                    }
-            );
-        }
-        return res;
+    public List<ProjectData> search(ProjectReq projectDTO) {
+        PageHelper.startPage(projectDTO.getPageNum(),projectDTO.getPageSize());
+        List<ProjectData> project  = iProjectDataService.list(projectDTO);
+
+        return project;
     }
 
     @Override

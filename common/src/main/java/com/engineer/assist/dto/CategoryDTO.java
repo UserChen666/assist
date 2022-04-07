@@ -1,5 +1,6 @@
-package com.engineer.assist.entity;
+package com.engineer.assist.dto;
 
+import com.engineer.assist.entity.Category;
 import lombok.Data;
 
 import java.util.List;

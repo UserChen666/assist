@@ -1,7 +1,10 @@
 package com.engineer.assist.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.req.ProjectReq;
+import com.engineer.assist.result.ProjectResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -22,7 +25,7 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     boolean deleteById(Integer id);
 
-    List<ProjectDTO> search(ProjectDTO projectDTO);
+    List<ProjectData> search(ProjectReq projectDTO);
 
     boolean updateData(ProjectData project);
 
