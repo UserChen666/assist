@@ -6,7 +6,7 @@ server:
       timeout: 30m
 spring:
   profiles:
-    active: dev
+    active: online
   session:
     store-type: jdbc
     jdbc:
@@ -35,8 +35,6 @@ mybatis-plus:
   configuration:
     cache-enabled: false
     map-underscore-to-camel-case: true
-  type-enums-package: com.engineer.assist.enumDTO
-
 pagehelper:
   params: count=countSql
   reasonable: true
@@ -44,12 +42,6 @@ pagehelper:
   helper-dialect: mysql
   page-size-zero: true
 
-custom:
-  aws:
-    access-key: CHOBITACCESSKEY
-    secret-key: CHOBIT/THISIS006SECRET007Key/dotORG
-    bucket: zhyea
-    endpoint: www.zhyea.com:80
 aliyun:
   oss:
     endpoint: https://oss-cn-hangzhou.aliyuncs.com
