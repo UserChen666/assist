@@ -81,7 +81,7 @@ public class ProjectController {
         return Resp.buildSuccess(true);
     }
 
-    @PostMapping("/download")
+    @PostMapping("/deleteFile")
     @ResponseBody
     Resp<Boolean> deleteFile(@RequestParam Integer id) {
         iProjectService.deleteFile(id);
