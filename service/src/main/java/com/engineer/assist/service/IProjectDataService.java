@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface IProjectDataService extends IService<ProjectData> {
 
-    List<ProjectData> list(ProjectReq projectDTO);
+    ProjectData getByProjectId(Integer id);
 }

@@ -20,8 +20,6 @@ import java.util.List;
 @Mapper
 public interface ProjectDataMapper extends BaseMapper<ProjectData> {
 
-    List<ProjectData> list(ProjectReq projectDTO);
-
     int deleteByPrimaryKey(Integer id);
 
     int insert(ProjectData record);

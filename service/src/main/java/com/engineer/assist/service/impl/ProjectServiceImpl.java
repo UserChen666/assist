@@ -3,6 +3,7 @@ package com.engineer.assist.service.impl;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
@@ -59,7 +60,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     private String bucketName;
     @Autowired
     private IUploadRecordService uploadRecordService;
-    
+
+    @Transactional
     public Boolean create(ProjectDTO projectDTO) {
         boolean save = save(projectDTO.getProject());
         projectDTO.getProjectData().setId(projectDTO.getProject().getId());
@@ -81,7 +83,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Override
     public ProjectDTO getDTOById(Integer id) {
         ProjectInfo project = getById(id);
-        ProjectData entity = iProjectDataService.lambdaQuery().eq(ProjectData::getProjectId, id).getEntity();
+        ProjectData entity = iProjectDataService.getByProjectId(id);
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setProjectInfo(project);
         projectDTO.setProjectData(entity);
@@ -90,9 +92,10 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     }
 
     @Override
+    @Transactional
     public boolean deleteById(Integer id) {
         boolean b = removeById(id);
-        ProjectData entity = iProjectDataService.lambdaQuery().eq(ProjectData::getProjectId, id).getEntity();
+        ProjectData entity = iProjectDataService.getByProjectId(id);
         boolean b1 = iProjectDataService.removeById(entity.getId());
         return b && b1;
     }
@@ -118,6 +121,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     }
 
     @Override
+    @Transactional
     public boolean updateData(ProjectData project) {
         boolean b = iProjectDataService.updateById(project);
         return b;
