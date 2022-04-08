@@ -5,6 +5,7 @@ import com.engineer.assist.entity.*;
 import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.resp.Resp;
+import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.IProjectService;
 import org.apache.commons.lang3.StringUtils;
@@ -45,11 +46,11 @@ public class ProjectController {
 
     @PostMapping("/list")
     @ResponseBody
-    Resp<List<ProjectData>> list(@RequestBody ProjectReq projectDTO) throws ServerException {
+    Resp<PageResult<ProjectResult>> list(@RequestBody ProjectReq projectDTO) throws ServerException {
         if(projectDTO.getPageNum() == 0 || projectDTO.getPageNum() == 0) {
             throw new ServerException("page param is zero");
         }
-        List<ProjectData> search = iProjectService.search(projectDTO);
+        PageResult<ProjectResult> search = iProjectService.search(projectDTO);
         return Resp.buildSuccess(search);
     }
 

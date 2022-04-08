@@ -18,7 +18,11 @@ public class WebConfig {
         if (e instanceof ServerException) {
             ServerException se = (ServerException) e;
 
-            return Resp.buildFail(se.getMessage(),se.getHttpCode());
+            Integer httpCode = se.getHttpCode();
+            if(httpCode == null) {
+                httpCode = 300;
+            }
+            return Resp.buildFail(se.getMessage(),httpCode);
         }
         return Resp.buildFail(e.getMessage());
     }

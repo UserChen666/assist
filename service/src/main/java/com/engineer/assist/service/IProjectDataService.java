@@ -1,11 +1,8 @@
 package com.engineer.assist.service;
 
-import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.ProjectData;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.engineer.assist.mapper.ProjectDataMapper;
 import com.engineer.assist.req.ProjectReq;
-import com.engineer.assist.result.ProjectResult;
 
 import java.util.List;
 

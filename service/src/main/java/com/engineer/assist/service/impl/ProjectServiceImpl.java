@@ -6,11 +6,14 @@ import com.aliyun.oss.model.PutObjectResult;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.mapper.ProjectInfoMapper;
 import com.engineer.assist.mapper.ProjectMapper;
 import com.engineer.assist.req.ProjectReq;
+import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -43,6 +47,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Autowired
     private IProjectDataService iProjectDataService;
     @Autowired
+    private ProjectInfoMapper projectInfoMapper;
+    @Autowired
     private IProjectCategoryRelService iProjectCategoryRelService;
     @Autowired
     private ProjectFileRelService projectFileRelService;
@@ -53,10 +59,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     private String bucketName;
     @Autowired
     private IUploadRecordService uploadRecordService;
-
+    
     public Boolean create(ProjectDTO projectDTO) {
         boolean save = save(projectDTO.getProject());
         projectDTO.getProjectData().setId(projectDTO.getProject().getId());
+
+        projectDTO.getProjectData().setProjectId(projectDTO.getProject().getId());
         boolean save1 = iProjectDataService.save(projectDTO.getProjectData());
         List<Integer> categoryIds = projectDTO.getCategoryIds();
         if (categoryIds.isEmpty()) return save && save1;
@@ -90,11 +98,23 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     }
 
     @Override
-    public List<ProjectData> search(ProjectReq projectDTO) {
+    public PageResult<ProjectResult> search(ProjectReq projectDTO) {
         PageHelper.startPage(projectDTO.getPageNum(),projectDTO.getPageSize());
-        List<ProjectData> project  = iProjectDataService.list(projectDTO);
+        List<ProjectResult> p = listForSearch(projectDTO);
 
-        return project;
+        PageInfo pageInfo = new PageInfo(p);
+
+        PageResult<ProjectResult> pageResult = new PageResult();
+        pageResult.setData(p);
+        pageResult.setTotal(pageInfo.getTotal());
+        pageResult.setPageNum(projectDTO.getPageNum());
+        pageResult.setPageSize(projectDTO.getPageSize());
+
+        return pageResult;
+    }
+
+    private List<ProjectResult> listForSearch(ProjectReq projectDTO) {
+        return projectInfoMapper.listForSearch(projectDTO);
     }
 
     @Override

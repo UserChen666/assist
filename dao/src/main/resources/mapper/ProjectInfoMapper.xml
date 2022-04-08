@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.engineer.assist.mapper.ProjectInfoMapper">
+  <resultMap id="BaseResultMap" type="com.engineer.assist.entity.ProjectInfo">
+    <!--@mbg.generated-->
+    <!--@Table project_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="descripetion" jdbcType="VARCHAR" property="descripetion" />
+    <result column="is_active" jdbcType="BIT" property="isActive" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, create_time, created_by, descripetion, is_active, project_name, project_type, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from project_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from project_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.engineer.assist.entity.ProjectInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into project_info (create_time, created_by, descripetion, 
+      is_active, project_name, project_type, 
+      update_time)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{descripetion,jdbcType=VARCHAR}, 
+      #{isActive,jdbcType=BIT}, #{projectName,jdbcType=VARCHAR}, #{projectType,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.engineer.assist.entity.ProjectInfo" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into project_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="descripetion != null">
+        descripetion,
+      </if>
+      <if test="isActive != null">
+        is_active,
+      </if>
+      <if test="projectName != null">
+        project_name,
+      </if>
+      <if test="projectType != null">
+        project_type,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="descripetion != null">
+        #{descripetion,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        #{isActive,jdbcType=BIT},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null">
+        #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.engineer.assist.entity.ProjectInfo">
+    <!--@mbg.generated-->
+    update project_info
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="descripetion != null">
+        descripetion = #{descripetion,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null">
+        is_active = #{isActive,jdbcType=BIT},
+      </if>
+      <if test="projectName != null">
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null">
+        project_type = #{projectType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.engineer.assist.entity.ProjectInfo">
+    <!--@mbg.generated-->
+    update project_info
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      descripetion = #{descripetion,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=BIT},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="listForSearch" resultMap="BaseResultMap" parameterType="com.engineer.assist.req.ProjectReq">
+    select
+    <include refid="Base_Column_List" />
+    from project_info
+    <where>
+      <if test="createdBy != null">
+        and created_by like concat('%',#{createdBy,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="projectName != null">
+        and project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="projectType != null">
+        and project_type = #{projectType,jdbcType=VARCHAR}
+      </if>
+      <if test="true">
+        and is_active = true
+      </if>
+    </where>
+  </select>
+</mapper>

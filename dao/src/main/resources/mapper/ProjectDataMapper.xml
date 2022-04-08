@@ -128,27 +128,4 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
-
-    <select id="list" resultMap="BaseResultMap" parameterType="com.engineer.assist.req.ProjectReq">
-        select
-        <include refid="Base_Column_List" />
-        from project_data
-        <where>
-            <if test="createdBy != null">
-                and created_by like concat('%',#{createdBy,jdbcType=VARCHAR},'%')
-            </if>
-            <if test="dataName != null">
-                and data_name like concat('%',#{dataName,jdbcType=VARCHAR},'%')
-            </if>
-            <if test="dataType != null">
-                and data_type = #{dataType,jdbcType=VARCHAR}
-            </if>
-            <if test="projectId != null">
-                and project_id = #{projectId,jdbcType=INTEGER}
-            </if>
-            <if test="source != null">
-                and `source` = #{source,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
 </mapper>

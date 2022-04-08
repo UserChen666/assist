@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
 import com.engineer.assist.req.ProjectReq;
+import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     boolean deleteById(Integer id);
 
-    List<ProjectData> search(ProjectReq projectDTO);
+    PageResult<ProjectResult> search(ProjectReq projectDTO);
 
     boolean updateData(ProjectData project);
 

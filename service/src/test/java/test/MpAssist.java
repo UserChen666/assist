@@ -12,6 +12,7 @@ public class MpAssist {
     public static void main(String[] args) {
         String outputDir = "/Users/wangbintao/workspace/src";
         ArrayList<String> tables = Lists.newArrayList();
+        tables.add("project_info");
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/engineer_db?serverTimezone=UTC&characterEncoding=utf-8", "root", "12345678")
                 .globalConfig(builder -> {
 
