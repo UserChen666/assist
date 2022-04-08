@@ -18,6 +18,12 @@
     id, create_time, created_by, descripetion, is_active, project_name, project_type, 
     update_time
   </sql>
+  <sql id="Base_Column_List_alian">
+    <!--@mbg.generated-->
+    p.id, p.create_time, p.created_by, p.descripetion, p.is_active, p.project_name, p.project_type,
+    p.update_time
+  </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
@@ -132,20 +138,29 @@
   
   <select id="listForSearch" resultMap="BaseResultMap" parameterType="com.engineer.assist.req.ProjectReq">
     select
-    <include refid="Base_Column_List" />
-    from project_info
+    distinct <include refid="Base_Column_List_alian" />
+    from project_info p
+    <if test="categoryIds != null and categoryIds.size > 0">
+      left join project_category_rel pcr on p.id = pcr.project_id
+    </if>
     <where>
+      <if test="categoryIds != null and categoryIds.size > 0">
+        and pcr.category_id in
+        <foreach collection="categoryIds" open="(" close=")" separator="," item="cid">
+          #{cid,jdbcType=INTEGER}
+        </foreach>
+      </if>
       <if test="createdBy != null">
-        and created_by like concat('%',#{createdBy,jdbcType=VARCHAR},'%')
+        and p.created_by like concat('%',#{createdBy,jdbcType=VARCHAR},'%')
       </if>
       <if test="projectName != null">
-        and project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
+        and p.project_name like concat('%',#{projectName,jdbcType=VARCHAR},'%')
       </if>
       <if test="projectType != null">
-        and project_type = #{projectType,jdbcType=VARCHAR}
+        and p.project_type = #{projectType,jdbcType=VARCHAR}
       </if>
       <if test="true">
-        and is_active = true
+        and p.is_active = true
       </if>
     </where>
   </select>

@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProjectCategoryRelService extends IService<ProjectCategoryRel> {
 
+    void deleteByProjectId(Integer projectId);
 }

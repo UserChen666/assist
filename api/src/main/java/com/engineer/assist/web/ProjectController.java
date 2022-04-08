@@ -54,20 +54,15 @@ public class ProjectController {
         return Resp.buildSuccess(search);
     }
 
-    @PostMapping("/updateProject")
-    Resp<Boolean> updateProject(@RequestBody ProjectInfo project) {
-        boolean b = iProjectService.updateById(project);
-        return Resp.buildSuccess(b);
-    }
     @PostMapping("/changeCategory")
-    Resp<Boolean> updateProject(@RequestBody ProjectCategoryRel projectCategoryRel) {
+    Resp<Boolean> updateProject(@RequestBody ProjectReq projectCategoryRel) {
         boolean b = iProjectService.updateCategory(projectCategoryRel);
         return Resp.buildSuccess(b);
     }
 
-    @PostMapping("/updateProjectData")
+    @PostMapping("/updateProject")
     @ResponseBody
-    Resp<Boolean> updateProject(@RequestBody ProjectData project) {
+    Resp<Boolean> updateProject(@RequestBody ProjectDTO project) {
         boolean b = iProjectService.updateData(project);
         return Resp.buildSuccess(b);
     }
@@ -83,6 +78,13 @@ public class ProjectController {
     @ResponseBody
     Resp<Boolean> download(@RequestParam String url) {
         iProjectService.download(url);
+        return Resp.buildSuccess(true);
+    }
+
+    @PostMapping("/download")
+    @ResponseBody
+    Resp<Boolean> deleteFile(@RequestParam Integer id) {
+        iProjectService.deleteFile(id);
         return Resp.buildSuccess(true);
     }
     @PostMapping("/getFileList")

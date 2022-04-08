@@ -1,6 +1,7 @@
 package com.engineer.assist.dto;
 
 import com.engineer.assist.entity.ProjectData;
+import com.engineer.assist.entity.ProjectFileRel;
 import com.engineer.assist.entity.ProjectInfo;
 import lombok.Data;
 
@@ -14,4 +15,5 @@ public class ProjectDTO extends Page{
     public ProjectInfo getProject(){
         return projectInfo;
     }
+    private List<ProjectFileRel> files;
 }

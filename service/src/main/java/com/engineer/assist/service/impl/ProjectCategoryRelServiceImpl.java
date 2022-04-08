@@ -4,7 +4,10 @@ import com.engineer.assist.entity.ProjectCategoryRel;
 import com.engineer.assist.mapper.ProjectCategoryRelMapper;
 import com.engineer.assist.service.IProjectCategoryRelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 /**
  * <p>
@@ -17,4 +20,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectCategoryRelServiceImpl extends ServiceImpl<ProjectCategoryRelMapper, ProjectCategoryRel> implements IProjectCategoryRelService {
 
+    @Override
+    public void deleteByProjectId(Integer projectId) {
+        ProjectCategoryRelMapper baseMapper = this.baseMapper;
+        HashMap<String, Object> param = Maps.newHashMap();
+        param.put("project_id",projectId);
+
+        baseMapper.deleteByMap(param);
+    }
 }

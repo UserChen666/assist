@@ -3,10 +3,10 @@ package com.engineer.assist.service.impl;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.mapper.ProjectInfoMapper;
 import com.engineer.assist.mapper.ProjectMapper;
 import com.engineer.assist.req.ProjectReq;
@@ -15,6 +15,8 @@ import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.SneakyThrows;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,8 +33,10 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -87,6 +91,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         ProjectDTO projectDTO = new ProjectDTO();
         projectDTO.setProjectInfo(project);
         projectDTO.setProjectData(entity);
+        List<ProjectFileRel> projectFileRels = listFiles(id);
+        projectDTO.setFiles(projectFileRels);
         return projectDTO;
 
     }
@@ -122,12 +128,20 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
     @Override
     @Transactional
-    public boolean updateData(ProjectData project) {
-        boolean b = iProjectDataService.updateById(project);
-        return b;
+    public boolean updateData(ProjectDTO project) {
+
+        iProjectDataService.updateById(project.getProjectData());
+        save(project.getProjectInfo());
+        return Boolean.TRUE;
     }
 
     @Override
+    public void deleteFile(Integer id) {
+        projectFileRelService.removeById(id);
+    }
+
+    @Override
+    @Transactional
     public Boolean upload(MultipartFile file, Integer projectId) {
         String url = "";
         if (!ossClient.doesBucketExist(bucketName))
@@ -197,11 +211,24 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         return list;
     }
 
+    @SneakyThrows
     @Override
-    public boolean updateCategory(ProjectCategoryRel projectCategoryRel) {
-        ProjectCategoryRel one = iProjectCategoryRelService.lambdaQuery().eq(ProjectCategoryRel::getProjectId, projectCategoryRel.getProjectId()).one();
-        iProjectCategoryRelService.removeById(one.getId());
-        iProjectCategoryRelService.save(projectCategoryRel);
+    @Transactional
+    public boolean updateCategory(ProjectReq projectCategoryRel) {
+        if(CollectionUtils.isEmpty(projectCategoryRel.getCategoryIds())) {
+            throw new ServerException("param is empty");
+        }
+        iProjectCategoryRelService.deleteByProjectId(projectCategoryRel.getId());
+
+        projectCategoryRel.getCategoryIds().forEach(c -> {
+            ProjectCategoryRel p = new ProjectCategoryRel();
+
+            p.setCategoryId(c);
+            p.setProjectId(projectCategoryRel.getId());
+
+            iProjectCategoryRelService.save(p);
+        });
+
         return true;
     }
 

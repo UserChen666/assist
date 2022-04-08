@@ -28,7 +28,7 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     PageResult<ProjectResult> search(ProjectReq projectDTO);
 
-    boolean updateData(ProjectData project);
+    boolean updateData(ProjectDTO project);
 
     Boolean upload(MultipartFile file,Integer projectId);
 
@@ -36,7 +36,9 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     List<ProjectFileRel> listFiles(Integer projectId);
 
-    boolean updateCategory(ProjectCategoryRel projectCategoryRel);
+    boolean updateCategory(ProjectReq projectCategoryRel);
 
     List<UploadRecord> getUploadRecord(Integer projectId);
+
+    void deleteFile(Integer id);
 }
