@@ -99,9 +99,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
     @Override
     @Transactional
-    public boolean deleteById(Integer id) {
+    public boolean deleteById(Integer id) throws ServerException {
         boolean b = removeById(id);
         ProjectData entity = iProjectDataService.getByProjectId(id);
+        if(entity == null) {
+            throw new ServerException("project data is not exist");
+        }
         boolean b1 = iProjectDataService.removeById(entity.getId());
         return b && b1;
     }

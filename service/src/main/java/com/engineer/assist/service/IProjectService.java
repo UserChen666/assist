@@ -3,6 +3,7 @@ package com.engineer.assist.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
@@ -24,7 +25,7 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     ProjectDTO getDTOById(Integer id);
 
-    boolean deleteById(Integer id);
+    boolean deleteById(Integer id) throws ServerException;
 
     PageResult<ProjectResult> search(ProjectReq projectDTO);
 

@@ -39,7 +39,7 @@ public class ProjectController {
 
     @GetMapping("/delete")
     @ResponseBody
-    Resp<Boolean> deleteById(@RequestParam Integer id) {
+    Resp<Boolean> deleteById(@RequestParam Integer id) throws ServerException {
         boolean b = iProjectService.deleteById(id);
         return Resp.buildSuccess(b);
     }
