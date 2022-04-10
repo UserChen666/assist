@@ -18,4 +18,6 @@ public interface IProjectCategoryRelService extends IService<ProjectCategoryRel>
     void deleteByProjectId(Integer projectId);
 
     List<ProjectCategoryRel> selectByProjectId(Integer id);
+
+    List<Integer> getCategoryByProjectIds(Integer id);
 }

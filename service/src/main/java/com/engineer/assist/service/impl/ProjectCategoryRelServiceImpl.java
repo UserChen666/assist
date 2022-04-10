@@ -4,6 +4,7 @@ import com.engineer.assist.entity.ProjectCategoryRel;
 import com.engineer.assist.mapper.ProjectCategoryRelMapper;
 import com.engineer.assist.service.IProjectCategoryRelService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.engineer.assist.util.AssistUtil;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +34,11 @@ public class ProjectCategoryRelServiceImpl extends ServiceImpl<ProjectCategoryRe
     @Override
     public List<ProjectCategoryRel> selectByProjectId(Integer id) {
         return lambdaQuery().eq(ProjectCategoryRel::getProjectId,id).list();
+    }
+
+    @Override
+    public List<Integer> getCategoryByProjectIds(Integer id) {
+        List<ProjectCategoryRel> projectCategoryRels = selectByProjectId(id);
+        return AssistUtil.getProperty(projectCategoryRels,ProjectCategoryRel::getCategoryId,Integer.class);
     }
 }

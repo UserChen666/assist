@@ -94,6 +94,10 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         projectDTO.setProjectData(entity);
         List<ProjectFileRel> projectFileRels = listFiles(id);
         projectDTO.setFiles(projectFileRels);
+
+        List<Integer> categoryIds = iProjectCategoryRelService.getCategoryByProjectIds(id);
+        projectDTO.setCategoryIds(categoryIds);
+
         return projectDTO;
 
     }
