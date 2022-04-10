@@ -16,7 +16,6 @@ public class MybatisAutoFill implements MetaObjectHandler {
             setFieldValByName("updatedBy", CurrentUserUtil.getName(),metaObject);
             setFieldValByName("createDate", LocalDateTime.now(),metaObject);
             setFieldValByName("updateDate", LocalDateTime.now(),metaObject);
-            setFieldValByName("isActive", true,metaObject);
         }
     }
 

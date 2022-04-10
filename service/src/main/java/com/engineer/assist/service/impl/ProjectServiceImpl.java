@@ -73,9 +73,9 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
     @Transactional
     public Boolean create(ProjectDTO projectDTO) {
+        projectDTO.getProjectInfo().setIsActive(true);
         boolean save = save(projectDTO.getProject());
         projectDTO.getProjectData().setId(projectDTO.getProject().getId());
-
         projectDTO.getProjectData().setProjectId(projectDTO.getProject().getId());
         projectDTO.getProjectData().setDataType(DataType.getByName(projectDTO.getProject().getProjectType().getCode()));
 
@@ -154,7 +154,12 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Override
     @Transactional
     public boolean updateData(ProjectDTO project) throws ServerException {
-        updateById(project.getProjectInfo());
+
+        ProjectInfo byId = getById(project.getProject().getId());
+        byId.setProjectName(project.getProject().getProjectName());
+        byId.setProjectType(project.getProject().getProjectType());
+        byId.setDescripetion(project.getProject().getDescripetion());
+        updateById(byId);
 
         ProjectData byProjectId = iProjectDataService.getByProjectId(project.getProject().getId());
 
