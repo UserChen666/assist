@@ -162,8 +162,19 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             throw new ServerException("data was wrong");
         }
 
+        ProjectData projectData = project.getProjectData();
+
         byProjectId.setDataType(DataType.getByName(project.getProject().getProjectType().getCode()));
+        byProjectId.setDataName(projectData.getDataName());
+        byProjectId.setSource(projectData.getSource());
+
         iProjectDataService.updateById(byProjectId);
+
+        ProjectReq projectReq = new ProjectReq();
+        projectReq.setCategoryIds(project.getCategoryIds());
+        projectReq.setId(project.getProject().getId());
+
+        updateCategory(projectReq);
 
         return Boolean.TRUE;
     }
