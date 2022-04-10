@@ -29,7 +29,7 @@ public interface IProjectService extends IService<ProjectInfo> {
 
     PageResult<ProjectResult> search(ProjectReq projectDTO);
 
-    boolean updateData(ProjectDTO project);
+    boolean updateData(ProjectDTO project) throws ServerException;
 
     Boolean upload(MultipartFile file,Integer projectId);
 

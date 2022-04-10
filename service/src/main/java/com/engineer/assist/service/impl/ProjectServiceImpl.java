@@ -149,11 +149,18 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
     @Override
     @Transactional
-    public boolean updateData(ProjectDTO project) {
-
-        project.getProjectData().setDataType(DataType.getByName(project.getProject().getProjectType().getCode()));
-        iProjectDataService.updateById(project.getProjectData());
+    public boolean updateData(ProjectDTO project) throws ServerException {
         updateById(project.getProjectInfo());
+
+        ProjectData byProjectId = iProjectDataService.getByProjectId(project.getProject().getId());
+
+        if(byProjectId == null) {
+            throw new ServerException("data was wrong");
+        }
+
+        byProjectId.setDataType(DataType.getByName(project.getProject().getProjectType().getCode()));
+        iProjectDataService.updateById(byProjectId);
+
         return Boolean.TRUE;
     }
 

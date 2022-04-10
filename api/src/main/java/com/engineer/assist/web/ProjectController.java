@@ -62,7 +62,7 @@ public class ProjectController {
 
     @PostMapping("/updateProject")
     @ResponseBody
-    Resp<Boolean> updateProject(@RequestBody ProjectDTO project) {
+    Resp<Boolean> updateProject(@RequestBody ProjectDTO project) throws ServerException {
         boolean b = iProjectService.updateData(project);
         return Resp.buildSuccess(b);
     }
