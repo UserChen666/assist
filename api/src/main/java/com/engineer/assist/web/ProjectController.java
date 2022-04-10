@@ -97,5 +97,9 @@ public class ProjectController {
     Resp<List<UploadRecord>> getUploadRecord(@RequestParam Integer projectId){
         return Resp.buildSuccess(iProjectService.getUploadRecord(projectId));
     }
-
+    @PostMapping("/getEnum")
+    @ResponseBody
+    Resp<Object> getEnum(){
+        return Resp.buildSuccess(iProjectService.getEnum());
+    }
 }

@@ -7,16 +7,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
 import com.engineer.assist.enumDTO.DataType;
+import com.engineer.assist.enumDTO.ProjectType;
 import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.mapper.ProjectInfoMapper;
 import com.engineer.assist.mapper.ProjectMapper;
 import com.engineer.assist.req.ProjectReq;
+import com.engineer.assist.result.EnumResult;
 import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
 import com.engineer.assist.util.AssistUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import javafx.util.Pair;
 import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +38,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -167,6 +171,16 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Override
     public void deleteFile(Integer id) {
         projectFileRelService.removeById(id);
+    }
+
+    @Override
+    public Object getEnum() {
+        EnumResult enumResult = new EnumResult();
+        List<Pair<Integer, String>> projectType = Arrays.stream(ProjectType.values()).map(e -> {
+            return new Pair<Integer, String>(e.getCode(), e.getName());
+        }).collect(Collectors.toList());
+        enumResult.setProjectTypes(projectType);
+        return enumResult;
     }
 
     @Override

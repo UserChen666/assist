@@ -42,4 +42,6 @@ public interface IProjectService extends IService<ProjectInfo> {
     List<UploadRecord> getUploadRecord(Integer projectId);
 
     void deleteFile(Integer id);
+
+    Object getEnum();
 }
