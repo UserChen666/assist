@@ -6,6 +6,7 @@ import com.aliyun.oss.model.PutObjectResult;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.dto.ProjectDTO;
 import com.engineer.assist.entity.*;
+import com.engineer.assist.enumDTO.DataType;
 import com.engineer.assist.exception.ServerException;
 import com.engineer.assist.mapper.ProjectInfoMapper;
 import com.engineer.assist.mapper.ProjectMapper;
@@ -72,6 +73,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         projectDTO.getProjectData().setId(projectDTO.getProject().getId());
 
         projectDTO.getProjectData().setProjectId(projectDTO.getProject().getId());
+        projectDTO.getProjectData().setDataType(DataType.getByName(projectDTO.getProject().getProjectType().getCode()));
+
         boolean save1 = iProjectDataService.save(projectDTO.getProjectData());
         List<Integer> categoryIds = projectDTO.getCategoryIds();
         if (categoryIds.isEmpty()) return save && save1;
@@ -148,6 +151,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Transactional
     public boolean updateData(ProjectDTO project) {
 
+        project.getProjectData().setDataType(DataType.getByName(project.getProject().getProjectType().getCode()));
         iProjectDataService.updateById(project.getProjectData());
         updateById(project.getProjectInfo());
         return Boolean.TRUE;
