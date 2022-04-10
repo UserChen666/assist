@@ -4,7 +4,7 @@ server:
     context-path: /assist
 spring:
   profiles:
-    active: dev
+    active: online
 #  session:
 #    store-type: jdbc
 #    jdbc:
@@ -43,7 +43,7 @@ pagehelper:
 
 aliyun:
   oss:
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
+    endpoint: http://oss-us-west-1.aliyuncs.com
     accessKeyId: LTAI5t7vm7Uujx3aoK9nbQYh # 访问身份验证中用到用户标识
     accessKeySecret: Yjdfn9JmR3dtI1rkpaoca1Ccddtrjm # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: upload # oss的存储空间
+    bucketName: assistroot # oss的存储空间

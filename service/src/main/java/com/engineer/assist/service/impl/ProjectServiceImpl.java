@@ -1,5 +1,6 @@
 package com.engineer.assist.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
@@ -38,6 +39,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -206,7 +208,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         if (!ossClient.doesBucketExist(bucketName))
             ossClient.createBucket(bucketName);
         try {
-            String fineName = file.getName();
+            String fineName = AssistUtil.getUuid(true) + "." + FileUtil.getSuffix(file.getOriginalFilename());
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fineName, file.getInputStream());
             PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
             Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
@@ -219,6 +221,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
 
             UploadRecord uploadRecord = new UploadRecord();
             uploadRecord.setProjectId(projectId).setUploader(CurrentUserUtil.getUser().getUserName());
+            uploadRecord.setCreateTime(LocalDateTime.now());
             uploadRecordService.save(uploadRecord);
             return true;
         } catch (IOException e) {
