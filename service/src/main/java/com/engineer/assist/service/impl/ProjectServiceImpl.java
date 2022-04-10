@@ -14,6 +14,7 @@ import com.engineer.assist.mapper.ProjectMapper;
 import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.result.EnumResult;
 import com.engineer.assist.result.PageResult;
+import com.engineer.assist.result.PairView;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
 import com.engineer.assist.util.AssistUtil;
@@ -176,8 +177,8 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     @Override
     public Object getEnum() {
         EnumResult enumResult = new EnumResult();
-        List<Pair<Integer, String>> projectType = Arrays.stream(ProjectType.values()).map(e -> {
-            return new Pair<Integer, String>(e.getCode(), e.getName());
+        List<PairView<Integer, String>> projectType = Arrays.stream(ProjectType.values()).map(e -> {
+            return new PairView<Integer, String>(e.getCode(), e.getName());
         }).collect(Collectors.toList());
         enumResult.setProjectTypes(projectType);
         return enumResult;
