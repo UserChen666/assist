@@ -1,6 +1,5 @@
 package com.engineer.assist.result;
 
-import javafx.util.Pair;
 import lombok.Data;
 
 import java.util.List;

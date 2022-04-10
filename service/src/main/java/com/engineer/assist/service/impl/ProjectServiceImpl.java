@@ -20,7 +20,6 @@ import com.engineer.assist.service.*;
 import com.engineer.assist.util.AssistUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import javafx.util.Pair;
 import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
