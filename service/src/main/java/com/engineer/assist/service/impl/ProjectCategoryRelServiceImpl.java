@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -27,5 +28,10 @@ public class ProjectCategoryRelServiceImpl extends ServiceImpl<ProjectCategoryRe
         param.put("project_id",projectId);
 
         baseMapper.deleteByMap(param);
+    }
+
+    @Override
+    public List<ProjectCategoryRel> selectByProjectId(Integer id) {
+        return lambdaQuery().eq(ProjectCategoryRel::getProjectId,id).list();
     }
 }

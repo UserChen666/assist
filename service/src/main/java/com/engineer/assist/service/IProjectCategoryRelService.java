@@ -3,6 +3,8 @@ package com.engineer.assist.service;
 import com.engineer.assist.entity.ProjectCategoryRel;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -14,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IProjectCategoryRelService extends IService<ProjectCategoryRel> {
 
     void deleteByProjectId(Integer projectId);
+
+    List<ProjectCategoryRel> selectByProjectId(Integer id);
 }

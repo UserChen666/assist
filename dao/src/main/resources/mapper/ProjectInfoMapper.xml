@@ -13,6 +13,18 @@
     <result column="project_type" jdbcType="VARCHAR" property="projectType" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+  <resultMap id="BaseResultMapResult" type="com.engineer.assist.result.ProjectResult">
+    <!--@mbg.generated-->
+    <!--@Table project_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="descripetion" jdbcType="VARCHAR" property="descripetion" />
+    <result column="is_active" jdbcType="BIT" property="isActive" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
     id, create_time, created_by, descripetion, is_active, project_name, project_type, 
@@ -136,7 +148,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="listForSearch" resultMap="BaseResultMap" parameterType="com.engineer.assist.req.ProjectReq">
+  <select id="listForSearch" resultMap="BaseResultMapResult" parameterType="com.engineer.assist.req.ProjectReq">
     select
     distinct <include refid="Base_Column_List_alian" />
     from project_info p

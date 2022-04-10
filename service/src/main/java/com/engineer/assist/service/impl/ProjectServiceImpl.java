@@ -13,6 +13,7 @@ import com.engineer.assist.req.ProjectReq;
 import com.engineer.assist.result.PageResult;
 import com.engineer.assist.result.ProjectResult;
 import com.engineer.assist.service.*;
+import com.engineer.assist.util.AssistUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.SneakyThrows;
@@ -114,6 +115,16 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         PageHelper.startPage(projectDTO.getPageNum(),projectDTO.getPageSize());
         List<ProjectResult> p = listForSearch(projectDTO);
 
+        p.forEach(r -> {
+            List<ProjectCategoryRel> rel = iProjectCategoryRelService.selectByProjectId(r.getId());
+
+            if(CollectionUtils.isNotEmpty(rel)) {
+                List<Integer> property = AssistUtil.getProperty(rel, ProjectCategoryRel::getCategoryId, Integer.class);
+
+                r.setCategoryIds(property);
+            }
+        });
+
         PageInfo pageInfo = new PageInfo(p);
 
         PageResult<ProjectResult> pageResult = new PageResult();
@@ -134,7 +145,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
     public boolean updateData(ProjectDTO project) {
 
         iProjectDataService.updateById(project.getProjectData());
-        save(project.getProjectInfo());
+        updateById(project.getProjectInfo());
         return Boolean.TRUE;
     }
 

@@ -15,6 +15,7 @@ public class WebConfig {
     @ResponseBody
     public Resp<Object> exceptionHandler(Exception e){
         log.error(e.getMessage());
+        e.printStackTrace();
         if (e instanceof ServerException) {
             ServerException se = (ServerException) e;
 
