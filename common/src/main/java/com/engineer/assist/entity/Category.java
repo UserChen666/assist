@@ -57,6 +57,9 @@ public class Category implements Serializable {
     @Column(name = "parent_id")
     private Integer parentId;
 
+    @Column(name = "pic")
+    private String pic;
+
     @Override
     public String toString() {
         return "Category{" +

@@ -44,4 +44,6 @@ public interface IProjectService extends IService<ProjectInfo> {
     void deleteFile(Integer id);
 
     Object getEnum();
+
+    String uploadForAll(MultipartFile file);
 }

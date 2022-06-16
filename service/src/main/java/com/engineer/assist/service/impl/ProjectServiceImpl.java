@@ -41,7 +41,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -174,6 +173,7 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         byProjectId.setDataType(DataType.getByName(project.getProject().getProjectType().getCode()));
         byProjectId.setDataName(projectData.getDataName());
         byProjectId.setSource(projectData.getSource());
+        byProjectId.setPic(projectData.getPic());
 
         iProjectDataService.updateById(byProjectId);
 
@@ -199,6 +199,24 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
         }).collect(Collectors.toList());
         enumResult.setProjectTypes(projectType);
         return enumResult;
+    }
+
+    @Override
+    public String uploadForAll(MultipartFile file) {
+        String url = "";
+        if (!ossClient.doesBucketExist(bucketName))
+            ossClient.createBucket(bucketName);
+        try {
+            String fineName = AssistUtil.getUuid(true) + "." + FileUtil.getSuffix(file.getOriginalFilename());
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fineName, file.getInputStream());
+            PutObjectResult putObjectResult = ossClient.putObject(putObjectRequest);
+            Date expiration = new Date(new Date().getTime() + 3600l * 1000 * 24 * 365 * 10);
+            return ossClient.generatePresignedUrl(bucketName, fineName, expiration).toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return "";
+        }
     }
 
     @Override

@@ -69,9 +69,15 @@ public class ProjectController {
 
     @PostMapping("/upload")
     @ResponseBody
-    Resp<Boolean> upload(@RequestParam("file") MultipartFile file, Integer projectId) {
+    Resp<Boolean> upload(@RequestParam("file") MultipartFile file, @RequestParam("projectId") Integer projectId) {
         Boolean upload = iProjectService.upload(file, projectId);
         return Resp.buildSuccess(upload);
+    }
+
+    @PostMapping("/uploadForAll")
+    @ResponseBody
+    Resp<String> uploadForAll(@RequestParam("file") MultipartFile file) {
+        return Resp.buildSuccess(iProjectService.uploadForAll(file));
     }
 
     @PostMapping("/download")

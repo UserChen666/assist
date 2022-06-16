@@ -44,4 +44,6 @@ public class ProjectData implements Serializable {
     private LocalDateTime updateTime;
 
     private String createdBy;
+
+    private String pic;
 }
