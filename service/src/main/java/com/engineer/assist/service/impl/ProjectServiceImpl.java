@@ -214,7 +214,6 @@ public class ProjectServiceImpl extends ServiceImpl<ProjectMapper, ProjectInfo> 
             return ossClient.generatePresignedUrl(bucketName, fineName, expiration).toString();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
             return "";
         }
     }
