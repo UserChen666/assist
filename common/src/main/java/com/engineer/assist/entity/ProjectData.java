@@ -5,6 +5,7 @@ import com.engineer.assist.enumDTO.DataType;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -44,6 +45,6 @@ public class ProjectData implements Serializable {
     private LocalDateTime updateTime;
 
     private String createdBy;
-
+    @TableField("pic")
     private String pic;
 }

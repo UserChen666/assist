@@ -12,6 +12,7 @@
         <result column="project_id" jdbcType="INTEGER" property="projectId" />
         <result column="source" jdbcType="VARCHAR" property="source" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="pic" jdbcType="VARCHAR" property="pic" />
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -33,10 +34,10 @@
         <!--@mbg.generated-->
         insert into project_data (create_time, created_by, data_name,
         data_type, project_id, `source`,
-        update_time)
+        update_time,pic)
         values (#{createTime,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{dataName,jdbcType=VARCHAR},
         #{dataType,jdbcType=VARCHAR}, #{projectId,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR},
-        #{updateTime,jdbcType=TIMESTAMP})
+        #{updateTime,jdbcType=TIMESTAMP},#{pic,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.engineer.assist.entity.ProjectData" useGeneratedKeys="true">
         <!--@mbg.generated-->
