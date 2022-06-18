@@ -8,4 +8,5 @@ import java.util.List;
 @Data
 public class ProjectResult extends ProjectInfo {
     private List<Integer> categoryIds;
+    private String pic;
 }

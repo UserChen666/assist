@@ -24,6 +24,7 @@
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="project_type" jdbcType="VARCHAR" property="projectType" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
@@ -150,8 +151,9 @@
   
   <select id="listForSearch" resultMap="BaseResultMapResult" parameterType="com.engineer.assist.req.ProjectReq">
     select
-    distinct <include refid="Base_Column_List_alian" />
-    from project_info p
+    distinct p.id, p.create_time, p.created_by, p.descripetion, p.is_active, p.project_name, p.project_type,
+    p.update_time,pd.pic
+    from project_info p left join project_data pd on p.id = pd.project_id
     <if test="categoryIds != null and categoryIds.size > 0">
       left join project_category_rel pcr on p.id = pcr.project_id
     </if>
