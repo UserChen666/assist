@@ -1,5 +1,6 @@
 package com.engineer.assist.service.impl;
 
+import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.engineer.assist.entity.CurrentUserUtil;
 import com.engineer.assist.entity.User;
@@ -28,7 +29,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public String login(User user) throws ServerException {
         String userName = user.getUserName();
-        User entity = lambdaQuery().eq(User::getUserName, userName).eq(User::getUserPwd, user.getUserPwd()).one();
+        User entity = lambdaQuery().eq(User::getUserName, userName).eq(User::getUserPwd, SecureUtil.md5(user.getUserPwd())).one();
 
         if (entity == null) {
             throw new ServerException("account was wrong",HttpStatus.FORBIDDEN.value());
