@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/account")
@@ -30,7 +31,11 @@ public class UserController {
 
         newUser.setUserPwd(SecureUtil.md5(user.getUserPwd()));
         newUser.setUserName(user.getUserName());
-        userService.save(user);
+        newUser.setCreateTime(LocalDateTime.now());
+        newUser.setIsActive(true);
+        newUser.setUpdateTime(LocalDateTime.now());
+        newUser.setCreatedBy("reg");
+        userService.save(newUser);
         return Resp.buildSuccess();
     }
 
